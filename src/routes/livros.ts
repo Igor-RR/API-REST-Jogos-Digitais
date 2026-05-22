@@ -116,6 +116,7 @@ router.delete("/:id", async(req: Request, res:Response) => {
             erro : "ID Inválido."
         });
     }
+    
 
     const livro = await prisma.livro.findUnique({
         where: {id}
