@@ -20,19 +20,19 @@ model Genero {
   livros Livro[]
 }
 
-model Livro {
+model Jogo {
   id Int @id @default(autoincrement())
   titulo String
+  idGenero Int
 
-  generoId Int
-  genero Genero @relation(fields: [generoId], references: [id])
+  //Criando o Objeto
+  genero Genero @relation(fields:[idGenero],references[id])
 
-  autores Autor[]
 }
 
-model Autor {
+model Plataforma{
   id Int @id @default(autoincrement())
   nome String
 
-  livros Livro[]
+  
 }
