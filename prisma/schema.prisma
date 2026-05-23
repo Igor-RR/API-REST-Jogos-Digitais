@@ -17,7 +17,7 @@ model Genero {
   id Int @id @default(autoincrement())
   nome String
 
-  livros Livro[]
+  jogos Jogo[]
 }
 
 model Jogo {
@@ -26,7 +26,10 @@ model Jogo {
   idGenero Int
 
   //Criando o Objeto
-  genero Genero @relation(fields:[idGenero],references[id])
+  genero Genero @relation(fields:[idGenero],references:[id])
+
+  // Um jogo pode possuir várias plataformas
+  plataformas Plataforma[]
 
 }
 
@@ -34,5 +37,5 @@ model Plataforma{
   id Int @id @default(autoincrement())
   nome String
 
-  
+  jogos Jogo[]
 }

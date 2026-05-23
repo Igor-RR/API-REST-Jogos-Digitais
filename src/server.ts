@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/generos", generosRouter);
 app.use("/livros", livrosRouter);
 app.use("/autores", autoresRouter);
+app.use("/jogos,jogosRouter");
 
 app.listen(PORT, () => {
     console.log(`Servidor executando em localhost:${PORT}`)
