@@ -63,7 +63,7 @@ router.post("/", async (req:Request, res:Response)=>{
         // Cria o jogo
         const novoJogo = await prisma.jogo.create({
             data: {
-                titulo: titulo,
+                titulo: titulo.trim(),
                 idGenero: Number(idGenero),
                 plataformas: {
                     connect: idPlataformas.map((id:number)=>({id:Number(id)}))

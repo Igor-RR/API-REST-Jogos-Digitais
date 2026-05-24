@@ -87,13 +87,27 @@ router.delete("/:id", async (req:Request, res: Response)=>{
         const id = Number(req.params.id)
 
         if(Number.isNaN(id)){
-            return
+            return res.status(400).json({
+                erro:"O ID deve ser um número"
+            })
         }
+
+        const genero = await prisma.genero.findUnique({
+            where:{id}
+        })
+
+        if(!genero){
+            return res.status(404).json("Gênero não encontrado")
+        }
+
+        await prisma.genero.delete({
+            where:{id}
+        })
     }
 
     catch {
 
-        res.status(500).json({erro:"Erro ao deletar gêneros"})
+        res.status(500).json({erro:"Erro ao deletar gênero"})
 
     }
 
