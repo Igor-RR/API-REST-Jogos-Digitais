@@ -21,8 +21,8 @@ Relacionamentos
 
 Um gênero possui vários jogos - OK
 Um jogo pertence a um gênero - OK
-Um jogo pode possuir várias plataformas - Em contrução
-Uma plataforma pode possuir vários jogos - Em construção
+Um jogo pode possuir várias plataformas - Ok
+Uma plataforma pode possuir vários jogos - Ok
 
 Objetivo
 

@@ -1,18 +1,18 @@
 import { Router, Request, Response } from "express";
-import { db } from "../db";
 import { prisma } from "../prisma";
 
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
+    
     const generos = await prisma.genero.findMany({
         include: {
-            livros: true
+            jogos: true
         }
     });
+    res.status(200).json(generos);
 
-    res.json(generos);
   } catch (error) {
     res.status(500).json({
       erro: "Erro ao buscar gêneros"
@@ -37,7 +37,7 @@ router.post("/", async (req: Request, res: Response) => {
         });
 
         res.status(201).json(novoGenero);
-    } catch (ex) {
+    } catch {
         res.status(500).json({
             erro: "Erro ao cadastrar gênero"
         });
@@ -73,60 +73,33 @@ router.put("/:id", async (req:Request, res:Response) => {
         });
 
         res.json(generoAtualizado);
-    } catch (ex) {
-        return res.status(400).json({
+    } catch {
+        return res.status(500).json({
             erro: "Erro ao atualizar gênero"
         })
     }
 });
 
-router.delete("/:id", (req : Request, res: Response) => {
-    const id = Number(req.params.id);
+router.delete("/:id", async (req:Request, res: Response)=>{
 
-    db.run(
-        "DELETE FROM generos WHERE id = ?",
-        [id],
-        function(erro) {
-            if(erro) {
-                return res.status(500).json(
-                    { erro: "Erro ao remover gênero." }
-                );
-            }
+    try {
+        
+        const id = Number(req.params.id)
 
-            if(this.changes === 0) {
-                return res.status(404).json(
-                    { erro: "Gênero não encontrado"}
-                );
-            }
-
-            res.status(204).send();
+        if(Number.isNaN(id)){
+            return
         }
-    );
-});
+    }
+
+    catch {
+
+        res.status(500).json({erro:"Erro ao deletar gêneros"})
+
+    }
 
 
-router.get("/:id", (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+})
 
-    db.get(
-        "SELECT * FROM generos WHERE id = ?",
-        [id],
-        (erro, linha) => {
-            if(erro) {
-                return res.status(500).json(
-                    {erro : "Erro ao buscar gênero"}
-                );
-            }
 
-            if(!linha) {
-                return res.status(404).json(
-                    {erro : "Gênero não encontrado"}
-                );
-            }
-
-            res.json(linha)
-        }
-    );
-});
 
 export default router;

@@ -1,0 +1,12 @@
+@url = https://localhost:3000/jogos
+
+GET{{url}}
+
+###
+POST{{url}}
+
+Content-Type: application/json
+{
+    titulo: "Enlisted"
+    idGenero: 1
+}
