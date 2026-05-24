@@ -32,3 +32,5 @@ cadastrar plataformas
 cadastrar jogos
 relacionar jogos com plataformas
 listar os dados cadastrados
+
+Pendências -> Finalizar rotas de plataformas

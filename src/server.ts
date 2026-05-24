@@ -1,8 +1,7 @@
 import express from "express";
-import "./db"
 import generosRouter from "./routes/generos";
-import livrosRouter from "./routes/livros";
-import autoresRouter from "./routes/autores";
+import plataformasRouter from "./routes/plataformas"
+import jogosRouter from "./routes/jogos"
 
 const app = express();
 const PORT = 3000;
@@ -10,9 +9,8 @@ const PORT = 3000;
 app.use(express.json());
     
 app.use("/generos", generosRouter);
-app.use("/livros", livrosRouter);
-app.use("/autores", autoresRouter);
-app.use("/jogos,jogosRouter");
+app.use("/plataformas", plataformasRouter);
+app.use("/jogos",jogosRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor executando em localhost:${PORT}`)

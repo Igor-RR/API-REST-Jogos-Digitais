@@ -3,6 +3,8 @@ import { prisma } from "../prisma";
 
 const router = Router();
 
+//Get para todas os jogos
+
 router.get("/",async (req:Request,res:Response) =>{
     try{
         const jogos = await prisma.jogo.findMany({
@@ -21,13 +23,46 @@ router.get("/",async (req:Request,res:Response) =>{
     }
 });
 
+//Get para um jogo único
+
+router.get("/:id",async (req:Request,res:Response) =>{
+    try{
+        const id = Number(req.params.id)
+
+        if(Number.isNaN(id)){
+            return res.status(400).json({
+                erro:"O ID não é um número"
+            })
+        }
+
+        const jogo = await prisma.jogo.findUnique({
+            where:{id}
+        })
+
+        if(!jogo){
+            res.status(404).json({
+                erro:"Jogo não encontrado"
+            })
+        }
+
+        res.status(200).json(jogo)
+
+    }
+    
+    catch{
+        return res.status(500).json({
+            erro: "Erro ao buscar jogo"
+        })
+    }
+})
+
 router.post("/", async (req:Request, res:Response)=>{
 
     try {
 
         const {titulo,idGenero, idPlataformas} = req.body;
 
-        if (!titulo || !idGenero){
+        if (!titulo || titulo.trim() == "" || !idGenero){
             return res.status(400).json(
                 {erro: "Os Campos título e idGenero são obrigatórios"}
             )
@@ -75,7 +110,7 @@ router.post("/", async (req:Request, res:Response)=>{
             }
         })
 
-        res.status(201).json({novoJogo})
+        res.status(201).json(novoJogo)
 
     }
 

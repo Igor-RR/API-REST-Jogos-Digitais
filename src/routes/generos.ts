@@ -20,6 +20,32 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    
+    const id = Number(req.params.id)
+
+    if(Number.isNaN(id)){
+        res.status(400).json({
+            erro:"O ID deve ser um número"
+        })
+
+    }
+
+    const generos = await prisma.genero.findMany({
+        include: {
+            jogos: true
+        }
+    });
+    res.status(200).json(generos);
+
+  } catch (error) {
+    res.status(500).json({
+      erro: "Erro ao buscar gêneros"
+    });
+  }
+});
+
 router.post("/", async (req: Request, res: Response) => {
     try {
         const { nome } = req.body;
@@ -72,7 +98,8 @@ router.put("/:id", async (req:Request, res:Response) => {
             }
         });
 
-        res.json(generoAtualizado);
+        res.status(200).json(generoAtualizado);
+
     } catch {
         return res.status(500).json({
             erro: "Erro ao atualizar gênero"
@@ -103,6 +130,8 @@ router.delete("/:id", async (req:Request, res: Response)=>{
         await prisma.genero.delete({
             where:{id}
         })
+
+        res.status(204).send()
     }
 
     catch {
