@@ -3,11 +3,32 @@
 GET {{url}}
 
 ###
+GET {{url}}/1
+
+###
 POST {{url}}
 Content-Type: application/json
 
 {
-    "titulo": "Backyardigans",
-    "idGenero": 2,
-    "idPlataformas":[1,3,4]
+    "titulo": "DONQUEI CONG",
+    "idGenero": 5,
+    "idPlataformas":[1]
+}
+
+###
+PUT {{url}}/4
+Content-Type: application/json
+
+{
+    "titulo": "Backyardigans - edition one",
+    "idGenero": 3,
+    "idPlataformas":[1,2,3]
+}
+
+###
+PATCH {{url}}/5
+Content-Type: application/json
+
+{
+    "titulo":"Donkey Kong"
 }

@@ -10,14 +10,14 @@ POST {{url}}
 Content-Type: application/json
 
 {
-    "nome":"Point-Clik"
+    "nome":"Aventura"
 }
 ###
-PUT {{url}}/1
+PUT {{url}}/4
 Content-Type: application/json
 
 {
-    "nome":"FPS"
+    "nome":"Corrida"
 }
 
 ###

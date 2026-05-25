@@ -3,17 +3,17 @@
 GET {{url}}
 
 ###
-GET {{url}}/2
+GET {{url}}/3
 
 ###
 POST {{url}}
 Content-Type: application/json
 
 {
-    "nome":"Play Station",
-    "jogos":[1,3,4]
+    "nome":"Baidu",
+    "jogos":[1,2,3]
 }
 
 ###
-DELETE {{url}}/2 
+DELETE {{url}}/4
 
