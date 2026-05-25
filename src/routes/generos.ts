@@ -26,18 +26,27 @@ router.get("/:id", async (req: Request, res: Response) => {
     const id = Number(req.params.id)
 
     if(Number.isNaN(id)){
-        res.status(400).json({
+        return res.status(400).json({
             erro:"O ID deve ser um número"
         })
 
     }
 
-    const generos = await prisma.genero.findMany({
-        include: {
-            jogos: true
-        }
+    const genero = await prisma.genero.findUnique({
+        
+        where:{id},
+        include: {jogos: true}
+
     });
-    res.status(200).json(generos);
+
+    if(!genero){
+        return res.status(404).json({
+            erro: "Gênero não encontrado"
+        })
+
+    }
+
+    res.status(200).json(genero);
 
   } catch (error) {
     res.status(500).json({

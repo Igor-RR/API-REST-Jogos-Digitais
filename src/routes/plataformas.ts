@@ -1,20 +1,25 @@
-import { Request,response,Response,Router } from "express";
+import { Request,Response,Router } from "express";
 import { prisma } from '../prisma'
-import router from "./generos";
+
+const router = Router();
 
 
 router.get("/", async (req:Request,res:Response)=>{
     try{
 
-        const plataformas = prisma.plataforma.findMany({
+        const plataformas = await prisma.plataforma.findMany({
             include:{
                 jogos: true
             }
         })
+
+        res.status(200).json(plataformas)
     }
     catch{
         return res.status(500).json("Erro ao buscar plataformas")
     }
+
+    
 })
 
 router.get("/:id", async(req:Request, res:Response)=>{
@@ -41,7 +46,7 @@ router.get("/:id", async(req:Request, res:Response)=>{
             })
         }
 
-        res.send(200).json(plataforma)
+        res.status(200).json(plataforma)
 
     }
     
@@ -56,12 +61,12 @@ router.post("/", async (req:Request,res:Response)=>{
         const {nome,idsJogos} = req.body
 
         if(!nome || nome.trim() == ""){
-            return res.status(404).json({
-                erro:"Nome inálido"
+            return res.status(400).json({
+                erro:"Nome inválido"
             })
         }
 
-        const jogos = await prisma.plataforma.findMany({
+        const jogos = await prisma.jogo.findMany({
             where:{
                 id:{
                     in:idsJogos
@@ -78,7 +83,9 @@ router.post("/", async (req:Request,res:Response)=>{
         const novaPlataforma = await prisma.plataforma.create({
             data:{
                 nome: nome,
-                jogos: idsJogos
+                jogos: {
+                    connect: idsJogos.map((id:number)=>({id:Number(id)}))
+                }
             },
             include:{
                 jogos: true
@@ -118,7 +125,7 @@ router.put("/:id", async(req:Request, res:Response)=>{
 
         if(!plataforma){
             return res.status(404).json({
-                erro:"A plataforma não foi encointrada"
+                erro:"A plataforma não foi encontrada"
             })
         }
 
