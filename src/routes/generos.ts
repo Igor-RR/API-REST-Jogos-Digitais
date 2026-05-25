@@ -11,6 +11,13 @@ router.get("/", async (req: Request, res: Response) => {
             jogos: true
         }
     });
+
+    if(generos.length === 0){
+        return res.status(404).json({
+            erro:"Nenhum gênero encontrado"
+        })
+    }
+
     res.status(200).json(generos);
 
   } catch (error) {
@@ -151,6 +158,7 @@ router.delete("/:id", async (req:Request, res: Response)=>{
 
 
 })
+
 
 
 

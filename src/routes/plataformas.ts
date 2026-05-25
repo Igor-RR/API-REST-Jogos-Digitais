@@ -13,8 +13,15 @@ router.get("/", async (req:Request,res:Response)=>{
             }
         })
 
+        if(plataformas.length === 0){
+            return res.status(404).json({
+                erro:"Não foi possivel encontrar as plataformas"
+            })
+        }
+
         res.status(200).json(plataformas)
     }
+
     catch{
         return res.status(500).json("Erro ao buscar plataformas")
     }
@@ -58,7 +65,7 @@ router.get("/:id", async(req:Request, res:Response)=>{
 
 router.post("/", async (req:Request,res:Response)=>{
     try{
-        const {nome,idsJogos} = req.body
+        const {nome,jogos} = req.body
 
         if(!nome || nome.trim() == ""){
             return res.status(400).json({
@@ -66,26 +73,34 @@ router.post("/", async (req:Request,res:Response)=>{
             })
         }
 
-        const jogos = await prisma.jogo.findMany({
-            where:{
-                id:{
-                    in:idsJogos
-                }
-            }
-        })
-
-        if(jogos.length !== idsJogos.length){
-            return res.status(404).json({
-                erro:"Um ou mais jogos não estão cadastrados"
+        if(!jogos){
+            return res.status(400).json({
+                erro:"A plataforma precisa ter pelo menos 1 jogo"
             })
         }
 
+        /*
+        const jogosBd = await prisma.jogo.findMany({
+            where:{
+                id:{
+                    in:jogos
+                }
+            }
+        })
+        */
+
+        /*if(jogosbd.length !== jogos.length){
+            return res.status(404).json({
+                erro:"Um ou mais jogos não estão cadastrados"
+            })
+        }*/
+
         const novaPlataforma = await prisma.plataforma.create({
             data:{
-                nome: nome,
+                nome: nome /*,
                 jogos: {
                     connect: idsJogos.map((id:number)=>({id:Number(id)}))
-                }
+                }*/
             },
             include:{
                 jogos: true

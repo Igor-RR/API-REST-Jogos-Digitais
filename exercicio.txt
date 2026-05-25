@@ -33,4 +33,8 @@ cadastrar jogos
 relacionar jogos com plataformas
 listar os dados cadastrados
 
-Pendências -> Finalizar rotas de plataformas
+Teste das rotas
+
+generos -> OK
+plataformas -> Em teste
+Jogos -> Em teste

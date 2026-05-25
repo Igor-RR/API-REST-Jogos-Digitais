@@ -14,6 +14,13 @@ router.get("/",async (req:Request,res:Response) =>{
             }
         })
 
+        if(jogos.length === 0){
+            res.status(404).json({
+                erro:"Nenhum jogo encontrado"
+            })
+
+        }
+
         res.status(200).json(jogos);
 
     } catch {
@@ -66,6 +73,12 @@ router.post("/", async (req:Request, res:Response)=>{
             return res.status(400).json(
                 {erro: "Os Campos título e idGenero são obrigatórios"}
             )
+        }
+
+        if(!idPlataformas){
+            return res.status(400).json({
+                erro:"O jogo precisa ter pelo menos 1 plataforma"
+            })
         }
 
         const genero = await prisma.genero.findUnique({

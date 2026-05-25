@@ -1,12 +1,13 @@
-@url = https://localhost:3000/jogos
+@url = http://localhost:3000/jogos
 
-GET{{url}}
+GET {{url}}
 
 ###
-POST{{url}}
-
+POST {{url}}
 Content-Type: application/json
+
 {
-    titulo: "Enlisted"
-    idGenero: 1
+    "titulo": "Backyardigans",
+    "idGenero": 2,
+    "idPlataformas":[1,3,4]
 }

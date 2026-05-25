@@ -1,0 +1,19 @@
+@url = http://localhost:3000/plataformas
+
+GET {{url}}
+
+###
+GET {{url}}/2
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+    "nome":"Play Station",
+    "jogos":[1,3,4]
+}
+
+###
+DELETE {{url}}/2 
+
